@@ -41,7 +41,9 @@ dependencies:
   flutter_bloc:
 
   carousel_slider:
+  fluttertoast:
   go_router:
+  shared_preferences:
   dots_indicator:
 
 

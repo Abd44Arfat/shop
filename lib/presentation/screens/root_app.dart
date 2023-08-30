@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:feather_icons/feather_icons.dart';
+import 'package:untitled/presentation/screens/search_screen.dart';
 
 import 'cart_screen.dart';
 import 'home_screen.dart';
@@ -26,13 +27,7 @@ class _RootAppState extends State<RootApp> {
       index: activeTab,
       children: [
         HomeScreen(),
-        Center(
-          child: Text(
-            "Library",
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
+        SearchResultsScreen(),
         CartScreen(),
         Center(
           child: Text(

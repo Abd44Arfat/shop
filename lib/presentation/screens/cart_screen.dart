@@ -1,18 +1,15 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/models/favourites_model.dart';
 import 'package:untitled/presentation/screens/widgets/custom_product_card.dart';
 
+import '../../cubits/products_cubit.dart';
 import '../../models/products_model.dart';
 import '../../shared/styles.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -23,110 +20,94 @@ class _CartScreenState extends State<CartScreen> {
         leading: Icon(Icons.arrow_back_ios),
         title: Center(child: Text('My Cart')),
       ),
-        body: ListView(
-            children: [
+      body: BlocProvider(
+  create: (context) => ProductsCubit()..fetchFavData(),
+  child: BlocConsumer<ProductsCubit, ProductsState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount:  ProductsCubit.get(context).favouritesModel?.data?.data.length ?? 0,
+            itemBuilder: (context, index) {
+              return CartProductCard(ProductsCubit.get(context).favouritesModel!.data.data[index]);
+            },
+          );
+        },
+      ),
+),
 
 
-
-
-            ]
-        )
     );
-
-        // Container(
-        //   width: double.infinity,
-        //   height: 118,
-        //   decoration: BoxDecoration(
-        //
-        //       color: Color(0xff262626)
-        //
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(20),
-        //     child: Row(children: [
-        //       Text('Total', style: getMediumStyle(color: Colors.white),)
-        //
-        //     ],),
-        //   ),
-        //
-        // )
-
-        //]
-
-
   }
-}
+  Widget CartProductCard(Datum model)=>
 
 
-class CartProductCard extends StatelessWidget {
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
 
-  const CartProductCard({super.key, });
+          width: double.infinity,
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
+          height: 199,
 
-        width: double.infinity,
+          decoration: BoxDecoration(
 
-        height: 199,
+              borderRadius: BorderRadius.circular(10),
 
-        decoration: BoxDecoration(
+              color: Color(0xff262626)),
 
-            borderRadius: BorderRadius.circular(10),
+          child: Padding(
 
-            color: Color(0xff262626)),
+            padding: const EdgeInsets.all(8.0),
 
-        child: Padding(
+            child: Column(
 
-          padding: const EdgeInsets.all(8.0),
+              children: [
 
-          child: Column(
+                Row(children: [
 
-            children: [
-
-              Row(children: [
-
-                Image.asset('assets/images/item.png', height: 100,),
+                  Image.network(model.product.image,height: 100,),
 
 
-                Spacer(),
+                  Spacer(),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                    Text('CosmicByte GS430Wireless Headset ',
-                      style: getRegularStyle(color: Colors.white),),
-
-
-                    Row(
-                      children: [
-                        Text('4.5 ', style: getRegularStyle(color: Colors.white),
+                      Text(model.product.name,
+                        style: getRegularStyle(color: Colors.white),),
 
 
-                        ),
-                        Icon(Icons.star, color: Colors.yellow,)
-                      ],
-                    ),
-                    Text(
-                      "159.00",
-                      style: getRegularStyle(color: Colors.white),
-                    )
+                      Row(
+                        children: [
+                          Text(model.product.price.toString(), style: getRegularStyle(color: Colors
+                              .white),
 
-                  ],)
 
-              ],),
+                          ),
+                          Icon(Icons.star, color: Colors.yellow,)
+                        ],
+                      ),
+                      Text(
+                        model.product.oldPrice.toString(),
+                        style: getRegularStyle(color: Colors.white),
+                      )
 
-            ],
+                    ],)
+
+                ],),
+
+              ],
+
+            ),
 
           ),
 
         ),
-
-      ),
-    );
-
-  }
+      );
 }
+
+

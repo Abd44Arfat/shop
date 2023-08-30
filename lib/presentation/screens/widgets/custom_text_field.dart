@@ -8,13 +8,13 @@ class CustomFormTextField extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.obscureText = false,
-    required this.icon, this.textInputType,
+     this.icon, this.textInputType,   TextEditingController? controller,
   });
 
   Function(String)? onChanged;
   Function(String)? onSaved;
   String? hintText;
-  final IconData icon;
+  final IconData? icon;
   final TextInputType ?textInputType;
   bool? obscureText;
 
@@ -45,7 +45,7 @@ class CustomFormTextField extends StatelessWidget {
           ],
         ),
         child:   TextFormField(
-
+style: TextStyle(color: Colors.white),
           keyboardType: textInputType,
           onSaved: onSaved != null
               ? (value) {
@@ -58,27 +58,32 @@ class CustomFormTextField extends StatelessWidget {
               return 'Field is required';
             }
           },
+
+
           onChanged: onChanged != null
               ? (value) {
             onChanged!(value!);
           }
               : null,
           decoration: InputDecoration(
-            suffixIcon: Icon(icon),
+            suffixIcon: Icon(icon,color: Colors.white,),
             filled: true,
             fillColor:   Color(0xFF262626),
             hintText: hintText,
             hintStyle: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontFamily: "Quicksand",
+
             ),
             focusedBorder: OutlineInputBorder(
+
                 borderSide: BorderSide(color: Color(0xff696969))),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide( color: Color(0xFF262626),),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
+
             ),
           ),
         ),

@@ -63,6 +63,7 @@ class CustomProductCard extends StatelessWidget {
                 Spacer(),
                 GestureDetector(
                     onTap: () {
+                      ProductsCubit.get(context).changeCartAdded(product.id);
                       print(product.id);
                     },
                     child: Container(

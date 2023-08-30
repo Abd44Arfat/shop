@@ -29,10 +29,6 @@ class HomeScreen extends StatelessWidget {
             HorizontalProductList()
           ],
         ),
-
-
-
-
         ),
       ) ,
       

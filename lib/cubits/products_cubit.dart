@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:untitled/models/cart_added_model.dart';
+import 'package:untitled/models/favourites_model.dart';
 import 'package:untitled/models/products_model.dart';
 
 import '../shared/dio_helper.dart';
@@ -24,7 +26,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           options: Options(
             headers: {
               "Authorization":
-                  "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+              "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
             },
           ));
 
@@ -32,7 +34,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       homeModel?.data.products.forEach((element) {
         cartadded.addAll({element.id: element.inFavorites});
 
-        print(cartadded.toString());
+
       });
 
       emit(ProductsSuccess());
@@ -42,13 +44,63 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
-  void CangeCartadded(int ProductId) {
-    DioHelper.postData(
-            url: 'favorites',
-            data: {'product_id': ProductId},
-            token:
-                'cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC')
-        .then((value) {emit(CartAddedSuccess());})
-        .catchError((error) {emit(CartAddedFailure());});
+  CartAddedModel? cartAddedModel;
+
+  void changeCartAdded(int productId) async {
+    cartadded[productId] = !cartadded[productId]!;
+    emit(ChangeCartAddedSuccess());
+    try {
+      final response = await Dio().post(
+        'https://student.valuxapps.com/api/favorites',
+        data: {'product_id': productId},
+        options: Options(
+          headers: {
+            "Authorization":
+            "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+          },
+        ),
+      );
+
+      cartAddedModel = CartAddedModel.fromJson(response.data);
+
+
+      if(!cartAddedModel!.status){
+        cartadded[productId] = !cartadded[productId]!;
+
+      }
+      emit(CartAddedSuccess(cartAddedModel!));
+    } catch (e) {
+      cartadded[productId] = !cartadded[productId]!;
+      print('Error: $e');
+      emit(CartAddedFailure());
+    }
+  }
+
+  FavouritesModel ?favouritesModel;
+
+  Future<void> fetchFavData() async {
+    emit(ProductsLoading());
+
+    try {
+      final response = await Dio().get('https://student.valuxapps.com/api/favorites',
+          options: Options(
+            headers: {
+              "Authorization":
+              "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+            },
+          ));
+
+      favouritesModel = FavouritesModel.fromJson(response.data);
+
+
+
+
+
+
+      emit(GetFavSuccess());
+    } catch (e) {
+      print('Error: $e');
+      emit(GetFavFailure());
+    }
   }
 }
