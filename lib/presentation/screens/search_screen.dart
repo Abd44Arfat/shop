@@ -5,10 +5,13 @@ import 'package:untitled/cubits/search_cubit.dart';
 import 'package:untitled/models/search_model.dart';
 import 'package:untitled/presentation/screens/widgets/custom_text_field.dart';
 
+import '../../cubits/products_cubit.dart';
 import '../../cubits/search_state.dart';
+import '../../models/cart_added_model.dart';
 import '../../shared/styles.dart';
 class SearchResultsScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
+
   var searchController = TextEditingController();
 
   SearchResultsScreen({
@@ -75,53 +78,49 @@ class SearchResultsScreen extends StatelessWidget {
     padding: const EdgeInsets.all(8.0),
     child: Container(
       width: double.infinity,
-      height: 199,
+      height: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(0xff262626),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Image.network(
-                  model.image,
-                  height: 100,
-                ),
-                Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      model.name,
-                      style: getRegularStyle(color: Colors.white),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          model.price.toString(),
-                          style: getRegularStyle(color: Colors.white),
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.yellow,
-                        )
-                      ],
-                    ),
-                    Text(
-                      model.description,
-                      style: getRegularStyle(color: Colors.white),
-                      maxLines: 2,
-                    )
-                  ],
-                )
-              ],
+            Image.network(
+              model.image,
+              width: 130,
+              height: 100,
+            ),
+            SizedBox(width: 30),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.name,
+                    maxLines: 2,
+                    style: getRegularStyle(color: Colors.white),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    model.price.toString(),
+                    style: getRegularStyle(color: Colors.white),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    model.description,
+                    style: getRegularStyle(color: Colors.white),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                ],
+              ),
             ),
           ],
         ),
       ),
     ),
-  );
-}
+  );}

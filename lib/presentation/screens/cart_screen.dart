@@ -1,15 +1,19 @@
-import 'package:feather_icons/feather_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:untitled/models/favourites_model.dart';
-import 'package:untitled/presentation/screens/widgets/custom_product_card.dart';
+
 
 import '../../cubits/products_cubit.dart';
-import '../../models/products_model.dart';
+
+import '../../shared/app_router.dart';
 import '../../shared/styles.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({Key? key,}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +21,26 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xff1F1F1F),
-        leading: Icon(Icons.arrow_back_ios),
+        leading: GestureDetector(
+            onTap: (){   GoRouter.of(context).go(AppRouter.KApprouter);},
+            child: Icon(Icons.arrow_back_ios)),
         title: Center(child: Text('My Cart')),
       ),
       body: BlocProvider(
   create: (context) => ProductsCubit()..fetchFavData(),
   child: BlocConsumer<ProductsCubit, ProductsState>(
         listener: (context, state) {
-          // TODO: implement listener
+        if (state is CartAddedSuccess)
+          BlocProvider.of<ProductsCubit>(context).fetchFavData();
+
+
         },
         builder: (context, state) {
           return ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount:  ProductsCubit.get(context).favouritesModel?.data?.data.length ?? 0,
             itemBuilder: (context, index) {
-              return CartProductCard(ProductsCubit.get(context).favouritesModel!.data.data[index]);
+              return CartProductCard(ProductsCubit.get(context).favouritesModel!.data.data[index],context);
             },
           );
         },
@@ -41,7 +50,7 @@ class CartScreen extends StatelessWidget {
 
     );
   }
-  Widget CartProductCard(Datum model)=>
+  Widget CartProductCard(Datum model,context)=>
 
 
       Padding(
@@ -66,40 +75,39 @@ class CartScreen extends StatelessWidget {
 
               children: [
 
-                Row(children: [
-
-                  Image.network(model.product.image,height: 100,),
-
-
-                  Spacer(),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      Text(model.product.name,
-                        style: getRegularStyle(color: Colors.white),),
-
-
-                      Row(
+                Row(
+                  children: [
+                    Image.network(
+                      model.product.image,
+                      height: 100,
+                    ),
+                    SizedBox(width: 20,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model.product.price.toString(), style: getRegularStyle(color: Colors
-                              .white),
-
-
+                          Text(
+                            model.product.name,
+                            style: getRegularStyle(color: Colors.white),
                           ),
-                          Icon(Icons.star, color: Colors.yellow,)
+                          Row(
+                            children: [
+                              Text(
+                                model.product.oldPrice.toString(),
+                                style: getRegularStyle(color: Colors.grey,decoration: TextDecoration.lineThrough),
+                              ),
+
+                            ],
+                          ),
+                          Text(
+                            model.product.price.toString(),
+                            style: getRegularStyle(color: Colors.white),
+                          ),
                         ],
                       ),
-                      Text(
-                        model.product.oldPrice.toString(),
-                        style: getRegularStyle(color: Colors.white),
-                      )
-
-                    ],)
-
-                ],),
-
+                    ),
+                  ],
+                ),
               ],
 
             ),

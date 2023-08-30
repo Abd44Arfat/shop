@@ -8,7 +8,7 @@ class CustomFormTextField extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.obscureText = false,
-     this.icon, this.textInputType,   TextEditingController? controller,
+     this.icon, this.textInputType,   TextEditingController? controller,  String? Function(dynamic value) ?validator,
   });
 
   Function(String)? onChanged;

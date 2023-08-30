@@ -26,7 +26,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           options: Options(
             headers: {
               "Authorization":
-              "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+              "5zrhBwKD1PtUC9xghfvA3ywGz4rffSmTj9F5PXmNwAYFw4HwefZYtc3RDMeco5VCyh7trk"
             },
           ));
 
@@ -56,7 +56,7 @@ class ProductsCubit extends Cubit<ProductsState> {
         options: Options(
           headers: {
             "Authorization":
-            "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+            "5zrhBwKD1PtUC9xghfvA3ywGz4rffSmTj9F5PXmNwAYFw4HwefZYtc3RDMeco5VCyh7trk"
           },
         ),
       );
@@ -66,6 +66,9 @@ class ProductsCubit extends Cubit<ProductsState> {
 
       if(!cartAddedModel!.status){
         cartadded[productId] = !cartadded[productId]!;
+
+      }else{
+        fetchFavData();
 
       }
       emit(CartAddedSuccess(cartAddedModel!));
@@ -86,7 +89,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           options: Options(
             headers: {
               "Authorization":
-              "cTqSB340bFBAwEaL2xMJhwQYpHnE6AnRgqXnDHJNtG3cAr3UgNRKbT7WhUXIraKqdECCaC"
+              "5zrhBwKD1PtUC9xghfvA3ywGz4rffSmTj9F5PXmNwAYFw4HwefZYtc3RDMeco5VCyh7trk"
             },
           ));
 

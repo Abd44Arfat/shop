@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:untitled/presentation/screens/search_screen.dart';
+import 'package:untitled/presentation/screens/setting_screen.dart';
 
 import 'cart_screen.dart';
 import 'home_screen.dart';
@@ -29,13 +30,7 @@ class _RootAppState extends State<RootApp> {
         HomeScreen(),
         SearchResultsScreen(),
         CartScreen(),
-        Center(
-          child: Text(
-            "Setting",
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
+        SettingScreen()
       ],
     );
   }

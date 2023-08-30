@@ -28,10 +28,10 @@ class CustomProductCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            product.name,
-            style: getRegularStyle(color: Colors.white),
+            product.name ,maxLines: 2,
+            style: getRegularStyle(color: Colors.white,),
           ),
           Text(
             product.price.toStringAsFixed(2),
@@ -51,8 +51,8 @@ class CustomProductCard extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      product.price.toStringAsFixed(2),
-                      style: getRegularStyle(color: Colors.white),
+                      product.oldPrice.toStringAsFixed(2),
+                      style: getRegularStyle(color: Colors.grey,decoration:TextDecoration.lineThrough,)
                     ),
                     Text(
                       product.price.toStringAsFixed(2),

@@ -7,7 +7,6 @@ import 'package:untitled/cubits/Auth/auth_cubit.dart';
 import 'package:untitled/presentation/screens/widgets/custom_button.dart';
 
 import '../../../shared/app_router.dart';
-
 class LoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -19,13 +18,14 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(),
       body: BlocProvider(
-        create: (BuildContext context) => AuthCubit(),
+        create: (BuildContext context) => AuthCubit()..model,
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
+              Fluttertoast.showToast(msg: AuthCubit.get(context).model!.message);
               GoRouter.of(context).go(AppRouter.KApprouter);
             } else if (state is LoginError) {
-              Fluttertoast.showToast(msg: 'Errorwwwwww');
+              Fluttertoast.showToast(msg: 'errorrr');
             }
           },
           builder: (context, state) {
@@ -38,14 +38,8 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image(
-                          image: AssetImage('assets/images/logo.jpg'),
-                          height: 150.0,
-                        ),
                         Text('qqqqqqqqq'),
-                        SizedBox(
-                          height: 20.0,
-                        ),
+                        SizedBox(height: 20.0),
                         TextFormField(
                           controller: emailController,
                           validator: (value) {
@@ -58,9 +52,7 @@ class LoginScreen extends StatelessWidget {
                             border: OutlineInputBorder(),
                           ),
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
+                        SizedBox(height: 10.0),
                         TextFormField(
                           controller: passwordController,
                           validator: (value) {
@@ -74,10 +66,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                           obscureText: true,
                         ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        CustomButton(
+                        SizedBox(height: 20.0),
+                        state is LoginLoading
+                            ? CircularProgressIndicator()
+                            : CustomButton(
                           press: () {
                             if (formKey.currentState!.validate()) {
                               AuthCubit.get(context).login(
@@ -93,9 +85,7 @@ class LoginScreen extends StatelessWidget {
                           fontesiz: 20,
                           textColor: Colors.white,
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
+                        SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

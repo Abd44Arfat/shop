@@ -25,6 +25,9 @@ class HomeScreen extends StatelessWidget {
             CustomAppBar(),
             CustomFormTextField(icon: FeatherIcons.search,),
             DiscountCardCarousel(),
+            SizedBox(height: 10,),
+            FilterationList(),
+            SizedBox(height: 10,),
 
             HorizontalProductList()
           ],
@@ -40,12 +43,26 @@ class FilterationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-        width: 88,
-        height: 40,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color(0xff262626))
+    return Container(
+      height: 40, // Set the desired height
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 8,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Container(
+              width: 88,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color(0xff262626),
+              ),
+              child: Center(child: Text('Poplar',style: TextStyle(color: Colors.white),)),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -69,8 +86,8 @@ class _DiscountCardCarouselState extends State<DiscountCardCarousel> {
           ],
           options: CarouselOptions(
             // enableInfiniteScroll: true,
-            //   autoPlay: true,
-            //   autoPlayInterval: Duration(seconds: 1),
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 1),
               onPageChanged: (index, reason) {
                 setState(() {
                   _currentIndex = index;

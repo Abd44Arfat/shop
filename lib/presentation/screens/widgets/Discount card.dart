@@ -11,15 +11,16 @@ class DiscountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-         
+
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
+
             width: double.infinity,
-            height: 166,
+            height: 140,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
 
@@ -35,7 +36,7 @@ class DiscountCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Row(
                   children: <Widget>[
 
@@ -51,7 +52,7 @@ class DiscountCard extends StatelessWidget {
                             TextSpan(
                               text: "80% \n",
                               style: TextStyle(
-                                fontSize: 43,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -67,13 +68,10 @@ class DiscountCard extends StatelessWidget {
                     ),
                     SizedBox(
 
-                      height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Image.asset(
+                      height:80,
+                      child: Image.asset(
 
-                            image),
-                      ),
+                          image),
                     ),
                   ],
                 ),

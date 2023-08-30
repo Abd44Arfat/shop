@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:untitled/cubits/search_state.dart';
 import 'package:untitled/models/search_model.dart';
+import 'package:untitled/shared/consatnts.dart';
 
 
 
@@ -25,7 +26,7 @@ class SearchCubit extends Cubit<SearchState> {
           headers: {
             'lang':'en',
             "Authorization":
-            "qFvifEKX22aX22OLWq92l3hf5RfY3PIYvcHSPtTMs3fJfCMYASAK8MYhSYcYRc2oYMvY03"
+            AppConstants.Key_Access_Token
           },
         ),
       );
